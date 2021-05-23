@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -29,10 +31,11 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -87,26 +90,93 @@
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../guide.html">SweetPea Guide and Information</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation and Setup</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../guide.html">SweetPea Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation and Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#automated-installation-from-the-python-package-index">Automated Installation from the Python Package Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#manual-installation-from-source">Manual Installation from Source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#contributing-to-sweetpea-development">Contributing to SweetPea Development</a></li>
+</ul>
+</li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Factorial Experiment Design</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#factors">Factors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#levels">Levels</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example">Example</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#derivations">Derivations</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#windows">Windows</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#transitions">Transitions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#within-trials">Within-Trials</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#basic-windows">Basic Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#transition-windows">Transition Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#within-trial-windows">Within-Trial Windows</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#glossary">Glossary</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="usage.html">Using SweetPea</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to SweetPea</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contributing.html">Contributing to SweetPea</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="contributing/issues.html">Using the GitHub Issue Tracker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing/development.html">Developing SweetPea</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="contributing/development.html#configuring-your-development-environment">Configuring Your Development Environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/development.html#repository-organization">Repository Organization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/development.html#workflows">Workflows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/development.html#pull-requests">Pull Requests</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../api.html">SweetPea API Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contributing/documentation.html">Contributing to the Documentation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="contributing/documentation.html#installing-dependencies">Installing Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/documentation.html#building-the-documentation">Building the Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/documentation.html#automatic-vs-manual-documentation">Automatic vs Manual Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/documentation.html#contributing-to-the-automatic-documentation">Contributing to the Automatic Documentation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/documentation.html#style-guides">Style Guides</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="contributing/rest_style_guide.html">reStructuredText Style Guide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="contributing/rest_style_guide.html#general">General</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/rest_style_guide.html#docstrings">Docstrings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="contributing/py_style_guide.html">Python Style Guide</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="contributing/py_style_guide.html#note-on-pep-8">Note on PEP 8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/py_style_guide.html#maximum-line-length">Maximum Line Length</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/py_style_guide.html#blank-lines">Blank Lines</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/py_style_guide.html#imports">Imports</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/py_style_guide.html#string-quotes">String Quotes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/py_style_guide.html#trailing-commas">Trailing Commas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/py_style_guide.html#comments">Comments</a></li>
+<li class="toctree-l4"><a class="reference internal" href="contributing/py_style_guide.html#type-checking-or-linting-overrides">Type-Checking or Linting Overrides</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">SweetPea API Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/sweetpea.html">sweetpea package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/sweetpea.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.core.html">sweetpea.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.sampling_strategies.html">sweetpea.sampling_strategies package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.tests.html">sweetpea.tests package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/sweetpea.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.backend.html">sweetpea.backend module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.base_constraint.html">sweetpea.base_constraint module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.blocks.html">sweetpea.blocks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.combinatorics.html">sweetpea.combinatorics module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.constraints.html">sweetpea.constraints module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.derivation_processor.html">sweetpea.derivation_processor module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.design_graph.html">sweetpea.design_graph module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.design_partitions.html">sweetpea.design_partitions module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.encoding_diagram.html">sweetpea.encoding_diagram module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.internal.html">sweetpea.internal module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.logic.html">sweetpea.logic module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.metrics.html">sweetpea.metrics module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.primitives.html">sweetpea.primitives module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/sweetpea.server.html">sweetpea.server module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
             
@@ -155,7 +225,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="../guide.html">SweetPea Guide and Information</a> &raquo;</li>
+          <li><a href="../guide.html">SweetPea Guide</a> &raquo;</li>
         
       <li>Factorial Experiment Design</li>
     
@@ -251,27 +321,38 @@ combination of factors and levels. In other words, we must have <span class="mat
 <span id="guide-factorial-derivations"></span><h2>Derivations<a class="headerlink" href="#derivations" title="Permalink to this headline">¶</a></h2>
 <p>A <a class="reference internal" href="#term-derivation"><span class="xref std std-term">derivation</span></a> (or <a class="reference internal" href="#term-derived-level"><span class="xref std std-term">derived level</span></a>) is a new level produced by
 combining other <a class="reference internal" href="#term-level"><span class="xref std std-term">levels</span></a>. This combination of levels can be
-directly constructed with <code class="xref py py-func docutils literal notranslate"><span class="pre">sweetpea.primitives.derived_level()</span></code>.</p>
-<p>There are three variants of derivation: <a class="reference internal" href="#guide-factorial-derivations-windows"><span class="std std-ref">windows</span></a>, <a class="reference internal" href="#guide-factorial-derivations-transitions"><span class="std std-ref">transitions</span></a>, and
-<a class="reference internal" href="#guide-factorial-derivations-within-trials"><span class="std std-ref">within-trial specifications</span></a>,
-detailed below.</p>
-<div class="section" id="windows">
-<span id="guide-factorial-derivations-windows"></span><h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
-<p>A <a class="reference internal" href="#term-window"><span class="xref std std-term">window</span></a> (constructed with <code class="xref py py-func docutils literal notranslate"><span class="pre">sweetpea.primitives.window()</span></code>) creates a
-level that is selected depending on a combination of levels from other factors
-in the current trial and multiple preceding trials.</p>
+directly constructed with <a class="reference internal" href="../api/sweetpea.primitives.html#sweetpea.primitives.DerivedLevel" title="sweetpea.primitives.DerivedLevel"><code class="xref py py-func docutils literal notranslate"><span class="pre">sweetpea.primitives.DerivedLevel()</span></code></a>.</p>
+<p>Derivations can also be constrained by <a class="reference internal" href="#term-derivation-window"><span class="xref std std-term">derivation windows</span></a>, which allow for specifying specific manners in which different levels
+from multiple factors can interact across trial boundaries. There are three
+kinds of derivation windows:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#guide-factorial-derivations-basic-windows"><span class="std std-ref">Basic windows</span></a>, from which
+other windows are made.</p></li>
+<li><p><a class="reference internal" href="#guide-factorial-derivations-transition-windows"><span class="std std-ref">Transition windows</span></a>,
+which constrain derivations across trial transition points.</p></li>
+<li><p><a class="reference internal" href="#guide-factorial-derivations-within-trial-windows"><span class="std std-ref">Within-trial windows</span></a>, which provide windows
+that look only within a single given trial.</p></li>
+</ul>
+<p>These are explained more below.</p>
+<div class="section" id="basic-windows">
+<span id="guide-factorial-derivations-basic-windows"></span><h3>Basic Windows<a class="headerlink" href="#basic-windows" title="Permalink to this headline">¶</a></h3>
+<p>A basic <a class="reference internal" href="#term-derivation-window"><span class="xref std std-term">derivation window</span></a>
+(<a class="reference internal" href="../api/sweetpea.primitives.html#sweetpea.primitives.DerivationWindow" title="sweetpea.primitives.DerivationWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">sweetpea.primitives.DerivationWindow</span></code></a>) creates a level that is selected
+depending on a combination of levels from other factors in the current trial and
+zero or more preceding trials.</p>
 </div>
-<div class="section" id="transitions">
-<span id="guide-factorial-derivations-transitions"></span><h3>Transitions<a class="headerlink" href="#transitions" title="Permalink to this headline">¶</a></h3>
-<p>A <a class="reference internal" href="#term-transition"><span class="xref std std-term">transition</span></a> (constructed with <code class="xref py py-func docutils literal notranslate"><span class="pre">sweetpea.primitives.transition()</span></code>)
-describes a level that is selected depending on a combination of levels from
-other factors in the current trial and the immediately preceding trial.</p>
+<div class="section" id="transition-windows">
+<span id="guide-factorial-derivations-transition-windows"></span><h3>Transition Windows<a class="headerlink" href="#transition-windows" title="Permalink to this headline">¶</a></h3>
+<p>A <a class="reference internal" href="#term-derivation-window-transition"><span class="xref std std-term">transition window</span></a>
+(<a class="reference internal" href="../api/sweetpea.primitives.html#sweetpea.primitives.TransitionDerivationWindow" title="sweetpea.primitives.TransitionDerivationWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">sweetpea.primitives.TransitionDerivationWindow</span></code></a>) describes a level that
+is selected depending on a combination of levels from other factors in the
+current trial and the immediately preceding trial.</p>
 </div>
-<div class="section" id="within-trials">
-<span id="guide-factorial-derivations-within-trials"></span><h3>Within-Trials<a class="headerlink" href="#within-trials" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference internal" href="#term-within-trial-derivation"><span class="xref std std-term">within-trial derivations</span></a> (constructed with
-<code class="xref py py-func docutils literal notranslate"><span class="pre">sweetpea.primitives.within_trial()</span></code>) describe a level that is selected
-depending on levels from other factors, all within the same trial.</p>
+<div class="section" id="within-trial-windows">
+<span id="guide-factorial-derivations-within-trial-windows"></span><h3>Within-Trial Windows<a class="headerlink" href="#within-trial-windows" title="Permalink to this headline">¶</a></h3>
+<p>The <a class="reference internal" href="#term-derivation-window-within-trial"><span class="xref std std-term">within-trial windows</span></a>
+(<a class="reference internal" href="../api/sweetpea.primitives.html#sweetpea.primitives.WithinTrialDerivationWindow" title="sweetpea.primitives.WithinTrialDerivationWindow"><code class="xref py py-class docutils literal notranslate"><span class="pre">sweetpea.primitives.WithinTrialDerivationWindow</span></code></a>) describe a level that
+is selected depending on levels from other factors, all within the same trial.</p>
 </div>
 </div>
 <div class="section" id="glossary">
@@ -279,6 +360,16 @@ depending on levels from other factors, all within the same trial.</p>
 <dl class="glossary simple">
 <dt id="term-derivation">derivation<a class="headerlink" href="#term-derivation" title="Permalink to this term">¶</a></dt><dd><p>An artificial <a class="reference internal" href="#term-level"><span class="xref std std-term">level</span></a> that results from the combination of other
 levels. Also called a <a class="reference internal" href="#term-derived-level"><span class="xref std std-term">derived level</span></a>.</p>
+</dd>
+<dt id="term-derivation-window">derivation window<a class="headerlink" href="#term-derivation-window" title="Permalink to this term">¶</a></dt><dd><p>A window constraining a <a class="reference internal" href="#term-derivation"><span class="xref std std-term">derivation</span></a> that depends on a combination
+of <a class="reference internal" href="#term-level"><span class="xref std std-term">levels</span></a> from other <a class="reference internal" href="#term-factor"><span class="xref std std-term">factors</span></a> in the
+current trial and zero or more preceding trials.</p>
+</dd>
+<dt id="term-derivation-window-transition">derivation window, transition<a class="headerlink" href="#term-derivation-window-transition" title="Permalink to this term">¶</a></dt><dd><p>A <a class="reference internal" href="#term-derivation-window"><span class="xref std std-term">derivation window</span></a> that depends on a combination of <a class="reference internal" href="#term-level"><span class="xref std std-term">levels</span></a> from other <a class="reference internal" href="#term-factor"><span class="xref std std-term">factors</span></a> in the current trial and the
+immediately preceding trial.</p>
+</dd>
+<dt id="term-derivation-window-within-trial">derivation window, within-trial<a class="headerlink" href="#term-derivation-window-within-trial" title="Permalink to this term">¶</a></dt><dd><p>A <a class="reference internal" href="#term-derivation-window"><span class="xref std std-term">derivation window</span></a> that depends on <a class="reference internal" href="#term-level"><span class="xref std std-term">levels</span></a> from
+other <a class="reference internal" href="#term-factor"><span class="xref std std-term">factors</span></a>, all within the same trial.</p>
 </dd>
 <dt id="term-derived-level">derived level<a class="headerlink" href="#term-derived-level" title="Permalink to this term">¶</a></dt><dd><p>See <a class="reference internal" href="#term-derivation"><span class="xref std std-term">derivation</span></a>.</p>
 </dd>
@@ -309,19 +400,16 @@ nature is said to be <a class="reference internal" href="#term-fully-crossed"><s
 </dd>
 <dt id="term-partially-crossed">partially crossed<a class="headerlink" href="#term-partially-crossed" title="Permalink to this term">¶</a></dt><dd><p>See <a class="reference internal" href="#term-fractional-factorial-experiment"><span class="xref std std-term">fractional factorial experiment</span></a>.</p>
 </dd>
-<dt id="term-transition">transition<a class="headerlink" href="#term-transition" title="Permalink to this term">¶</a></dt><dd><p>A <a class="reference internal" href="#term-derivation"><span class="xref std std-term">derivation</span></a> that depends on a combination of <a class="reference internal" href="#term-level"><span class="xref std std-term">levels</span></a> from other <a class="reference internal" href="#term-factor"><span class="xref std std-term">factors</span></a> in the current trial and the
-immediately preceding trial.</p>
+<dt id="term-transition-window">transition window<a class="headerlink" href="#term-transition-window" title="Permalink to this term">¶</a></dt><dd><p>See <a class="reference internal" href="#term-derivation-window-transition"><span class="xref std std-term">derivation window, transition</span></a>.</p>
 </dd>
 <dt id="term-trial">trial<a class="headerlink" href="#term-trial" title="Permalink to this term">¶</a></dt><dd><p>An individual repetition of an experiment. A minimum number of trials must
 be run to obtain sufficient evidence to draw conclusions, and this number
 is determined in part by the number of <a class="reference internal" href="#term-factor"><span class="xref std std-term">factors</span></a> and
 <a class="reference internal" href="#term-level"><span class="xref std std-term">levels</span></a>.</p>
 </dd>
-<dt id="term-window">window<a class="headerlink" href="#term-window" title="Permalink to this term">¶</a></dt><dd><p>A <a class="reference internal" href="#term-derivation"><span class="xref std std-term">derivation</span></a> that depends on a combination of <a class="reference internal" href="#term-level"><span class="xref std std-term">levels</span></a> from other <a class="reference internal" href="#term-factor"><span class="xref std std-term">factors</span></a> in the current trial and
-multiple preceding trials.</p>
+<dt id="term-window">window<a class="headerlink" href="#term-window" title="Permalink to this term">¶</a></dt><dd><p>See <a class="reference internal" href="#term-derivation-window"><span class="xref std std-term">derivation window</span></a>.</p>
 </dd>
-<dt id="term-within-trial-derivation">within-trial derivation<a class="headerlink" href="#term-within-trial-derivation" title="Permalink to this term">¶</a></dt><dd><p>A <a class="reference internal" href="#term-derivation"><span class="xref std std-term">derivation</span></a> that depends on <a class="reference internal" href="#term-level"><span class="xref std std-term">levels</span></a> from other
-<a class="reference internal" href="#term-factor"><span class="xref std std-term">factors</span></a>, all within the same trial.</p>
+<dt id="term-within-trial-derivation">within-trial derivation<a class="headerlink" href="#term-within-trial-derivation" title="Permalink to this term">¶</a></dt><dd><p>See <a class="reference internal" href="#term-derivation-window-within-trial"><span class="xref std std-term">derivation window, within-trial</span></a>.</p>
 </dd>
 </dl>
 </div>
