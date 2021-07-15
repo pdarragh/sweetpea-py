@@ -29,7 +29,7 @@ from copy import deepcopy
 from dataclasses import InitVar, dataclass, field
 from itertools import product
 from random import randint
-from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, cast
+from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple, Union, cast
 
 
 ###############################################################################
@@ -504,10 +504,25 @@ class Factor:
     def __hash__(self) -> int:
         return hash(self.name)
 
-    def __getitem__(self, name: str) -> Level:
-        value = self.get_level(name)
+    def __getitem__(self, key: Union[int, str]) -> Level:
+        if isinstance(key, str):
+            value = self.get_level(key)
+            if value is None:
+                raise KeyError(f"Factor {self.name} has no level named {key}.")
+        elif isinstance(key, int):
+            if key >= 0:
+                value_iter = iter(self._level_map.values())
+            else:
+                value_iter = iter(reversed(list(self._level_map.values())))
+                key += 1
+                key = abs(key)
+            while key >= 0:
+                value = next(value_iter)
+                key -= 1
+        else:
+            raise KeyError(f"Invalid key for factor {self.name}: {key}")
         if value is None:
-            raise KeyError(f"Factor {self.name} has no level named {name}.")
+            raise KeyError(f"Invalid key for factor {self.name}: {key}")
         return value
 
     def __contains__(self, name: str) -> bool:
