@@ -5,10 +5,10 @@ a factorial experimental design.
 
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import List, Optional, Union
+from typing import List, Optional, Set, Union
 
 from sweetpea.new_constraints import Constraint
-from sweetpea.primitives import DerivedFactor, Factor
+from sweetpea.primitives import Level, SimpleLevel, DerivedLevel, Factor, SimpleFactor, DerivedFactor
 
 
 class ConversionMethod(Enum):
@@ -56,7 +56,39 @@ class Block:
     _is_complex = None
 
     def __post_init__(self):
-        ...
+        # Ensure the design is non-empty.
+        if not self.design:
+            raise ValueError("Design must specify at least one factor.")
+        # Any derived levels in the design's factors must derive simple factors
+        # in the design.
+        simple_factors: Set[SimpleFactor] = set()
+        included_factors: Set[SimpleFactor] = set()
+
+        def find_included_factors(level: DerivedLevel):
+            for factor in level.window.factors:
+                if isinstance(factor, DerivedFactor):
+                    for sublevel in factor.levels:
+                        find_included_factors(sublevel)
+                elif isinstance(factor, SimpleFactor):
+                    included_factors.add(factor)
+                else:
+                    raise RuntimeError(f"Expected SimpleFactor or DerivedFactor but found {type(level).__name__}.")
+
+        for factor in self.design:
+            for level in factor:
+                if isinstance(level, SimpleLevel):
+                    simple_factors.add(level.factor)
+                elif isinstance(level, DerivedLevel):
+                    find_included_factors(level)
+                else:
+                    raise RuntimeError(f"Expected SimpleLevel or DerivedLevel but found {type(level).__name__}.")
+
+        undefined_factors = included_factors - simple_factors
+        if undefined_factors:
+            raise RuntimeError(f"Derived levels in design include factors that are not listed in the design: "
+                               f"{', '.join(f.name for f in undefined_factors)}. "
+                               f"Either these factors should be included in the design, or the derived levels should "
+                               f"be adjusted.")
 
     def __getitem__(self, factor_name: str) -> Factor:
         value = self.get_factor(factor_name)
