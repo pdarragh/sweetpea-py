@@ -3,12 +3,15 @@ a factorial experimental design.
 """
 
 
+from __future__ import annotations
+
+
 from dataclasses import dataclass, field
 from enum import Enum, auto
 from typing import List, Optional, Set, Union
 
-from sweetpea.new_constraints import Constraint
-from sweetpea.primitives import Level, SimpleLevel, DerivedLevel, Factor, SimpleFactor, DerivedFactor
+from sweetpea.new_constraints import Constraint, VariableTracker
+from sweetpea.primitives import SimpleLevel, DerivedLevel, Factor, SimpleFactor, DerivedFactor
 
 
 class ConversionMethod(Enum):
@@ -48,10 +51,16 @@ class BlockVar:
 
 @dataclass
 class Block:
+
     design: List[Factor]
+
     crossing: List[Factor] = field(default_factory=list)
+
     constraints: List[Constraint] = field(default_factory=list)
+
     conversion_method: ConversionMethod = ConversionMethod.TSEYTIN
+
+    variable_tracker: VariableTracker = field(init=False)
 
     _is_complex = None
 
@@ -59,6 +68,7 @@ class Block:
         # Ensure the design is non-empty.
         if not self.design:
             raise ValueError("Design must specify at least one factor.")
+
         # Any derived levels in the design's factors must derive simple factors
         # in the design.
         simple_factors: Set[SimpleFactor] = set()
@@ -89,6 +99,9 @@ class Block:
                                f"{', '.join(f.name for f in undefined_factors)}. "
                                f"Either these factors should be included in the design, or the derived levels should "
                                f"be adjusted.")
+
+        # Generate the formula for this block.
+        self.variable_tracker = VariableTracker(self.design)
 
     def __getitem__(self, factor_name: str) -> Factor:
         value = self.get_factor(factor_name)
