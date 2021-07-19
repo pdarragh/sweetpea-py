@@ -1,11 +1,15 @@
 """This module provides constraints for CNF generation."""
 
 
+from __future__ import annotations
+
+
+from collections import defaultdict
 from dataclasses import InitVar, dataclass, field
-from typing import List
+from typing import Dict, List, Optional
 
 from sweetpea.formulas import Formula, Var
-from sweetpea.primitives import Factor
+from sweetpea.primitives import Factor, Level
 
 
 @dataclass
@@ -15,20 +19,50 @@ class VariableTracker:
 
     next_value: int = field(init=False, default=1)
 
-    level_variables: List[Var] = field(init=False, default_factory=list)
+    variables: List[Var] = field(init=False, default_factory=list)
+
+    variable_dict: Dict[int, Var] = field(init=False, default_factory=dict)
+
+    factor_variables: Dict[Factor, List[Var]] = field(init=False, default_factory=lambda: defaultdict(list))
+
+    level_variables: Dict[Level, List[Var]] = field(init=False, default_factory=lambda: defaultdict(list))
+
+    constraint_variables: Dict[Constraint, List[Var]] = field(init=False, default_factory=lambda: defaultdict(list))
 
     def __post_init__(self, design: List[Factor]):
         # Generate variables for each level in the design.
         for factor in design:
             for level in factor:
                 if level.weight > 1:
-                    for weight_label in range(level.weight):
-                        self.level_variables.append(Var(self.next_value,
-                                                        f"{factor.name}.{level.name}.w{weight_label}"))
-                        self.next_value += 1
+                    for weight_index in range(level.weight):
+                        self.generate_level_var(level, weight_index)
+
                 else:
-                    self.level_variables.append(Var(self.next_value, f"{factor.name}.{level.name}"))
-                    self.next_value += 1
+                    self.generate_level_var(level)
+
+    def __getitem__(self, key) -> Var:
+        return self.variables[key]
+
+    def generate_var(self, label: Optional[str] = None) -> Var:
+        value = self.next_value
+        self.next_value += 1
+        if label is None:
+            label = f"v{value}"
+        var = Var(value, label)
+        self.variables.append(var)
+        self.variable_dict[value] = var
+        return var
+
+    def generate_level_var(self, level: Level, weight: Optional[int] = None, extra_label: Optional[str] = None):
+        if weight is None:
+            label = f"{level.factor.name}.{level.name}"
+        else:
+            label = f"{level.factor.name}.{level.name}.w{weight}"
+        if extra_label is not None:
+            label += f".{extra_label}"
+        var = self.generate_var(label)
+        self.factor_variables[level.factor].append(var)
+        self.level_variables[level].append(var)
 
 
 @dataclass
@@ -37,7 +71,14 @@ class Constraint:
         pass
 
 
+# TODO: Do we actually need this?
 @dataclass
 class Consistency(Constraint):
+    def generate_formula(self, tracker: VariableTracker) -> Formula:
+        pass
+
+
+@dataclass
+class FullyCross(Constraint):
     def generate_formula(self, tracker: VariableTracker) -> Formula:
         ...
