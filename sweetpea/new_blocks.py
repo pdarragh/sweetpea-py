@@ -32,24 +32,6 @@ class ConversionMethod(Enum):
 
 
 @dataclass
-class BlockVar:
-    """A formula variable for use in :class:`Blocks <.Block>`. Variables used
-    in formulas were traditionally implemented as simple :class:`ints <int>`,
-    but they are not truly integers since the typical integer operations
-    (addition, multiplication, etc.) have no meaning for formula variables.
-
-    In addition to an integer :attr:`~.BlockVar.value`, formula variables also
-    have a :attr:`~.BlockVar.label`. This is used to mark the manner in which a
-    variable was generated, which helps with debugging problematic formulas.
-    """
-    value: int
-    label: str
-
-    def __int__(self) -> int:
-        return self.value
-
-
-@dataclass
 class Block:
 
     design: List[Factor]
