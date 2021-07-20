@@ -34,6 +34,12 @@ class ConversionMethod(Enum):
 @dataclass
 class Block:
 
+    ########
+    ## Init Fields
+    ##
+    ## The @dataclass-generated `__init__` method will provide parameters for
+    ## all of the following fields.
+
     design: List[Factor]
 
     crossing: List[Factor] = field(default_factory=list)
@@ -41,6 +47,14 @@ class Block:
     constraints: List[Constraint] = field(default_factory=list)
 
     conversion_method: ConversionMethod = ConversionMethod.TSEYTIN
+
+    ########
+    ## Non-Init Fields
+    ##
+    ## The following fields will not appear in the @dataclass-generated
+    ## `__init__` method. This is accomplished by using
+    ## `dataclasses.field(init=False)` (for public fields) or using an
+    ## underscore-prefixed name (for "private" fields).
 
     variable_tracker: VariableTracker = field(init=False)
 
