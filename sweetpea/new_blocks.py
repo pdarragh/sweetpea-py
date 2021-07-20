@@ -8,10 +8,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from typing import List, Optional, Set, Union
+from functools import reduce
+from itertools import product
+from typing import List, Optional, Set, Tuple, Union
 
-from sweetpea.new_constraints import Constraint, VariableTracker
-from sweetpea.primitives import SimpleLevel, DerivedLevel, Factor, SimpleFactor, DerivedFactor
+from sweetpea.new_constraints import Constraint, Exclusion, VariableTracker
+from sweetpea.formulas import Var
+from sweetpea.primitives import Level, SimpleLevel, DerivedLevel, Factor, SimpleFactor, DerivedFactor
 
 
 class ConversionMethod(Enum):
@@ -42,11 +45,13 @@ class Block:
 
     design: List[Factor]
 
-    crossing: List[Factor] = field(default_factory=list)
+    crossings: List[List[Factor]] = field(default_factory=list)
 
     constraints: List[Constraint] = field(default_factory=list)
 
     conversion_method: ConversionMethod = ConversionMethod.TSEYTIN
+
+    require_complete_crossing: bool = True
 
     ########
     ## Non-Init Fields
@@ -58,9 +63,23 @@ class Block:
 
     variable_tracker: VariableTracker = field(init=False)
 
-    _is_complex = None
+    exclusions: int = field(init=False)
+
+    _is_complex: Optional[bool] = None
+
+    _crossing_size: Optional[int] = None
 
     def __post_init__(self):
+        # Ensure the design is satisfactory.
+        self._check_design()
+
+        # Initialize the variable tracker for this block with the design.
+        self.variable_tracker = VariableTracker(self.design)
+
+        # Count the exclusions.
+        self.exclusions = self._count_exclusions()
+
+    def _check_design(self):
         # Ensure the design is non-empty.
         if not self.design:
             raise ValueError("Design must specify at least one factor.")
@@ -96,8 +115,23 @@ class Block:
                                f"Either these factors should be included in the design, or the derived levels should "
                                f"be adjusted.")
 
-        # Generate the formula for this block.
-        self.variable_tracker = VariableTracker(self.design)
+    def _count_exclusions(self) -> int:
+        # If there are no crossings listed, we have nothing to exclude.
+        if not self.crossings:
+            return 0
+
+        # Generate a full crossing as a list of tuples from the first list of
+        # crossed factors.
+        # TODO: Is it right to only use the first crossing? What does it mean
+        #       if there are multiple crossings but only one is checked for
+        #       exclusions?
+        full_crossing = list(product(factor.levels for factor in self.crossings[0]))
+
+        # Initialize a set of tuples.
+        excluded_crossings: Set[Tuple[Level, Level]] = set()
+
+        for exclusion in (constraint for constraint in self.constraints if isinstance(constraint, Exclusion)):
+            ...
 
     def __getitem__(self, factor_name: str) -> Factor:
         value = self.get_factor(factor_name)
@@ -119,12 +153,6 @@ class Block:
                 return True
         return False
 
-    def get_factor(self, factor_name: str) -> Optional[Factor]:
-        for factor in self.design:
-            if factor.name == factor_name:
-                return factor
-        return None
-
     @property
     def is_complex(self) -> bool:
         """A block is considered "complex" if any of the following conditions
@@ -137,11 +165,27 @@ class Block:
           :class:`.DerivedFactor`.
         """
         if self._is_complex is None:
-            self._is_complex = (
-                len(self.constraints) > 0
-                or any(factor.has_complex_window for factor in self.design)
-                or any(isinstance(factor, DerivedFactor) for factor in self.crossing))
+            self._is_complex = not (len(self.constraints) > 0
+                                    or any(factor.has_complex_window for factor in self.design)
+                                    or any(any(isinstance(factor, DerivedFactor)
+                                               for factor in crossing)
+                                           for crossing in self.crossings))
         return self._is_complex
+
+    @property
+    def crossing_size(self) -> int:
+        if self._crossing_size is None:
+            raise RuntimeError("Block's crossing size is undefined! Was this block properly initialized?")
+        return self._crossing_size
+
+    def get_factor(self, factor_name: str) -> Optional[Factor]:
+        for factor in self.design:
+            if factor.name == factor_name:
+                return factor
+        return None
+
+    def first_variable_for_level(self, level: Level) -> Var:
+        return self.variable_tracker[level][0]
 
     # TODO: REMOVE. (Backwards compatibility.)
     def has_factor(self, factor: Union[str, Factor]) -> bool:
@@ -158,5 +202,23 @@ class Block:
                 block: Block = ...
                 if "factor_name" in block:
                     ...
+                factor: Factor = ...
+                if factor in block:
+                    ...
         """
         return factor in self
+
+
+@dataclass
+class FullyCrossedBlock(Block):
+    def __post_init__(self):
+        super().__post_init__()
+
+        # Initialize crossing size.
+        size = reduce(lambda acc, factor: acc * len(factor.levels), self.crossings[0])
+
+
+@dataclass
+class PartiallyCrossedBlock(Block):
+    def __post_init__(self):
+        super().__post_init__()
