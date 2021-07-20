@@ -40,8 +40,23 @@ class VariableTracker:
                 else:
                     self.generate_level_var(level)
 
-    def __getitem__(self, key) -> Var:
-        return self.variables[key]
+    def __getitem__(self, key):
+        if isinstance(key, int):
+            return self.variables[key]
+        if isinstance(key, Level):
+            variables = self.level_variables.get(key)
+            if variables is None:
+                raise KeyError(f"No such level in tracker: {key.name}.")
+            return variables
+        if isinstance(key, Factor):
+            variables = self.factor_variables.get(key)
+            if variables is None:
+                raise KeyError(f"No such factor in tracker: {key.name}.")
+        if isinstance(key, Constraint):
+            variables = self.constraint_variables.get(key)
+            if variables is None:
+                raise KeyError(f"No such constraint in tracker: {key}.")
+        raise KeyError(f"Invalid key: {key}.")
 
     def generate_var(self, label: Optional[str] = None) -> Var:
         value = self.next_value
