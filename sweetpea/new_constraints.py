@@ -97,3 +97,8 @@ class Consistency(Constraint):
 class FullyCross(Constraint):
     def generate_formula(self, tracker: VariableTracker) -> Formula:
         ...
+
+
+@dataclass
+class Exclusion(Constraint):
+    ...
